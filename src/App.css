@@ -2,6 +2,8 @@
   font-family: 'Roboto', sans-serif;
   min-height: 100vh;
   background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
 .header {
@@ -10,6 +12,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  position: fixed;
+  z-index: 1002;
+  top: 0;
+  width: 100%;
 }
 
 .logo {
@@ -29,6 +35,9 @@
   border: none;
   width: 100%;
   justify-content: space-between;
+  position: fixed;
+  top: 84px;
+  z-index: 1002;
 }
 
 .tab {
@@ -53,7 +62,17 @@
 
 .container {
   padding: 15px;
+  margin-top: 160px;
+  margin-bottom: 0;
+  height: fit-content;
+}
+
+.list-content {
+  width: 100%;
+  height: 100vh;
   direction: rtl;
+  margin: 0;
+  padding: 0;
 }
 
 .card {
@@ -274,4 +293,47 @@
   color: #888;
   text-align: center;
   margin-top: 10px;
+}
+
+.refresh-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Circular refresh span when not refreshing */
+.refresh-control span {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #6E3830; /* MAIN_COLOR from your app */
+  border-top: 4px solid transparent; /* Creates the "missing" segment for rotation effect */
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* Rotate the circle based on pull distance */
+.refresh-control span:not(.refreshing) {
+  transform: rotate(0deg);
+}
+
+/* When refreshing, animate the spin */
+.refresh-control.refreshing span {
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

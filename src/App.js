@@ -84,14 +84,20 @@ const postDonation = async (donationData) => {
 const ListScreen = ({ category }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [pullDistance, setPullDistance] = useState(0);
+  const containerRef = useRef(null);
+  const startY = useRef(0);
+
+  // Fetch data function
+  const loadData = async () => {
+    setLoading(true);
+    const donations = await fetchDonations(category);
+    setData(donations);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      const donations = await fetchDonations(category);
-      setData(donations);
-      setLoading(false);
-    };
     loadData();
 
     const subscription = supabase
@@ -109,6 +115,35 @@ const ListScreen = ({ category }) => {
     return () => subscription.unsubscribe();
   }, [category]);
 
+  // Pull-to-refresh logic
+  const handlePullStart = (e) => {
+    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    if (containerRef.current.scrollTop === 0) {
+      startY.current = clientY;
+    }
+  };
+
+  const handlePullMove = (e) => {
+    if (startY.current === 0 || containerRef.current.scrollTop > 0) return;
+
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+    const distance = clientY - startY.current;
+    if (distance > 0) {
+      setPullDistance(Math.min(distance * 0.5, 100)); // Dampen the pull effect
+      e.preventDefault(); // Prevent default scrolling during pull
+    }
+  };
+
+  const handlePullEnd = async () => {
+    if (pullDistance > 70) { // Threshold to trigger refresh
+      setRefreshing(true);
+      await loadData();
+      setRefreshing(false);
+    }
+    setPullDistance(0);
+    startY.current = 0;
+  };
+
   const formatDate = (dateString) => {
     try {
       return formatDistanceToNow(new Date(dateString), { addSuffix: true, locale: ar });
@@ -118,11 +153,31 @@ const ListScreen = ({ category }) => {
   };
 
   const getCategoryIcon = () => {
-    switch(category) {
+    switch (category) {
       case 'mosques': return <FaMosque color="#9E3345" />;
       case 'blood': return <IoWater color="#D32F2F" />;
       default: return <FaHandHoldingHeart color="#009CF0" />;
     }
+  };
+
+  if (loading) {
+    return (
+      <div className="container">
+        {Array(5).fill().map((_, i) => (
+          <div key={i} className="card">
+            <div className="shimmer" style={{ height: '24px', width: '70%', marginBottom: '10px' }} />
+            <div className="shimmer" style={{ height: '16px', width: '90%', marginBottom: '10px' }} />
+            <div className="shimmer" style={{ height: '20px', width: '40%', marginBottom: '8px' }} />
+            {category !== 'blood' && <div className="shimmer" style={{ height: '20px', width: '50%' }} />}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const lottieOptions = {
+    loop: true,
+    autoplay: true,
   };
 
   if (loading) {
@@ -141,7 +196,32 @@ const ListScreen = ({ category }) => {
   }
 
   return (
-    <div className="container">
+    <div 
+      className="container"
+      ref={containerRef}
+      onMouseDown={handlePullStart}
+      onMouseMove={handlePullMove}
+      onMouseUp={handlePullEnd}
+      onMouseLeave={handlePullEnd}
+      onTouchStart={handlePullStart}
+      onTouchMove={handlePullMove}
+      onTouchEnd={handlePullEnd}
+      style={{ overflowY: 'auto', maxHeight: '80vh', position: 'relative' }}
+    >
+      <div 
+        className={`refresh-control ${refreshing ? 'refreshing' : ''}`}
+        style={{ 
+          transform: `translateY(${pullDistance - 60}px)`, 
+          opacity: pullDistance > 0 ? 1 : 0,
+          transition: refreshing ? 'none' : 'transform 0.2s, opacity 0.2s',
+        }}
+      >
+        {refreshing ? (
+          <span></span> /* Spinning circle when refreshing */
+        ) : (
+          <span style={{ transform: `rotate(${pullDistance * 2}deg)` }}></span> /* Rotates while pulling */
+        )}
+      </div>
       {data.length === 0 ? (
         <EmptyStateIllustration category={category} />
       ) : (
