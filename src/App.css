@@ -1,0 +1,277 @@
+.app {
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.header {
+  background-color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.header h1 {
+  color: #6E3830;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.tab-bar {
+  background-color: #fff;
+  display: flex;
+  border: none;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.tab {
+  color: #d5a7a0;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  outline: none;
+  width: 100%;
+}
+
+.tab.active {
+  color: #6E3830;
+  border-bottom: 3px solid #6E3830;
+  outline: none;
+}
+
+.container {
+  padding: 15px;
+  direction: rtl;
+}
+
+.card {
+  background: linear-gradient(#fff, #fbfaff);
+  border-radius: 15px;
+  padding: 15px;
+  margin: 8px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.category-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(87, 0, 180, 0.08);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.time-ago {
+  color: #777;
+  font-size: 12px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phone-button {
+  background-color: #004D33;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fab {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #6E3830;
+  border-radius: 30px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.27);
+  cursor: pointer;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  direction: rtl;
+}
+
+.modal-content {
+  background: white;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.form-container {
+  padding: 20px 0;
+}
+
+.form-container label {
+  display: block;
+  margin: 15px 0 8px;
+  font-weight: 500;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 91%;
+  padding: 12px 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #f5f5f5;
+  margin-bottom: 10px;
+}
+
+.form-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.category-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.category-button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.category-button.active {
+  border-color: #fff;
+  background: rgba(87, 0, 180, 0.08);
+}
+
+.submit-button {
+  background-color: #6E3830;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.error-text {
+  color: #D32F2F;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #e6e6e6 25%, #c8c8c8 50%, #e6e6e6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+}
+
+.empty-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.empty-sub-text {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  margin-top: 10px;
+}
