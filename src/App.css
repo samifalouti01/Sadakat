@@ -63,7 +63,7 @@
 .container {
   padding: 15px;
   margin-top: 160px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   height: fit-content;
 }
 
