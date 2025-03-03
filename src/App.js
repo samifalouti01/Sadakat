@@ -353,13 +353,13 @@ function App() {
       <Tab.Group>
         <Tab.List className="tab-bar">
           <Tab className={({ selected }) => `tab ${selected ? 'active' : ''}`}>
-            <FaMosque  style={{ fontSize: '20px'}}/> المساجد
+            <FaMosque  style={{ fontSize: '15px'}}/> المساجد
           </Tab>
           <Tab className={({ selected }) => `tab ${selected ? 'active' : ''}`}>
-            <IoWater style={{ fontSize: '20px'}} /> التبرع بالدم
+            <IoWater style={{ fontSize: '15px'}} /> التبرع بالدم
           </Tab>
           <Tab className={({ selected }) => `tab ${selected ? 'active' : ''}`}>
-            <FaHandHoldingHeart style={{ fontSize: '20px'}} /> المنشورات العامة
+            <FaHandHoldingHeart style={{ fontSize: '15px'}} /> المنشورات العامة
           </Tab>
         </Tab.List>
         <Tab.Panels>
